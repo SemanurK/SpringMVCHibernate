@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.kafein.dao.TalepDao;
@@ -12,31 +13,37 @@ import com.kafein.model.Talep;
 
 //@Service Bir beaninin business katmanýnda çalýþacak bir bean olduðunu belirtiyoruz
 @Service
-@Transactional
 public class TalepServiceImpl implements TalepService{
 	
-private	TalepDao talepdao;
-
+	
+    TalepDao talepDAO;	
 	@Autowired
-	public void setTalepdao(TalepDao talepdao) {
-		this.talepdao = talepdao;
+	@Qualifier("mytalepDAO")
+	public void setTalepdao(TalepDao talepDAO) {
+		this.talepDAO = talepDAO;
 	}
-
-	public List listAllTaleps() {		
-		return talepdao.listAllTaleps();
+	@Transactional
+	public List<Talep> listAllTaleps() {		
+		return this.talepDAO.listAllTaleps();
 	}
 	
-	public void saveOrUpdate(Talep talep) {
-		talepdao.saveOrUpdate(talep);
+	@Transactional
+	public Talep findTalepById(int id) {		
+		return this.talepDAO.findTalepById(id);
 	}
-
-	public Talep findTalepById(int id) {
-		
-		return talepdao.findTalepById(id);
-	}
-
+	@Transactional
 	public void deleteTalep(int id) {
-		talepdao.deleteTalep(id);
+		this.talepDAO.deleteTalep(id);
+	}
+	@Transactional
+	public void addTalep(Talep talep) {
+		this.talepDAO.addTalep(talep);
+		
+	}
+	@Transactional
+	public void updateTalep(Talep talep) {
+		this.talepDAO.updateTalep(talep);
+		
 	}
 
 }

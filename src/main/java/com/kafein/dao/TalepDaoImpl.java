@@ -6,41 +6,49 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.kafein.model.Talep;
 
-@Repository 
+@Repository
 public class TalepDaoImpl implements TalepDao {
 
 	@Autowired
-	private SessionFactory sessionFactory;
-	//SessionFactory veritabanýna baðlanma iþlemlerinþ yönetmek için kullanýlýr.
+	 SessionFactory sessionFactory;
+	// SessionFactory veritabanýna baðlanma iþlemlerinþ yönetmek için
+	// kullanýlýr.
 
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-
 	@SuppressWarnings("unchecked")
-	public List listAllTaleps() {
-		//Criteria sorgulara kriter ekleyerek sorgulama yapar 
-		Criteria criteria = getSession().createCriteria(Talep.class);
-		return (List) criteria.list();
-		
+	public List<Talep> listAllTaleps() {
+		// Session session = this.sessionFactory.getCurrentSession();
+		List<Talep> taleplist = this.sessionFactory.getCurrentSession().createQuery("from talep").list();
+		return taleplist;
 	}
 
-	public void saveOrUpdate(Talep talep) {		
-		getSession().saveOrUpdate(talep);
+	public void addTalep(Talep talep) {
+		this.sessionFactory.getCurrentSession().persist(talep);
+
+	}
+
+	public void updateTalep(Talep talep) {
+		this.sessionFactory.getCurrentSession().update(talep);
+
 	}
 
 	public Talep findTalepById(int id) {
-		 Talep talep = (Talep) getSession().get(Talep.class, id);
+		Talep talep=(Talep) this.sessionFactory.getCurrentSession().load(Talep.class, new Integer(id));
 		return talep;
 	}
 
 	public void deleteTalep(int id) {
-		 Talep talep = (Talep) getSession().get(Talep.class, id);
-		 getSession().delete(talep);
+		Talep t = (Talep) this.sessionFactory.getCurrentSession().load(Talep.class, new Integer(id));
+		if(null != t){
+			this.sessionFactory.getCurrentSession().delete(t);
+		}
 
 	}
 

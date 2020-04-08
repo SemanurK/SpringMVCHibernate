@@ -8,12 +8,14 @@ import com.kafein.model.Talep;
 
 
 public interface TalepService {
-	public List listAllTaleps();
-	 
-	 public void saveOrUpdate(Talep talep);
-	 
-	 public Talep findTalepById(int id);
-	 
-	 public void deleteTalep(int id);
+	public List<Talep> listAllTaleps();
+
+	public void addTalep(Talep talep);
+
+	public void updateTalep(Talep talep);
+
+	public Talep findTalepById(int id);
+
+	public void deleteTalep(int id);
 
 }
