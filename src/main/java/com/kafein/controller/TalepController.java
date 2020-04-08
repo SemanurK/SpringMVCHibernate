@@ -18,21 +18,16 @@ import com.kafein.service.TalepService;
 @RequestMapping(value = "/talep")
 public class TalepController {
 
-	@Autowired(required=true)	
-	 TalepService talepService;	
+    @Autowired
+    TalepService talepService;
 
-	
-	@Qualifier(value="talepService")
-	public void setTalepservice(TalepService talepService) {
-		this.talepService = talepService;
-	}
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String listPersons(Model model)
-	{		
-		model.addAttribute("taleplist", this.talepService.listAllTaleps());
-		return "Talep/index";
-	}
-	
+
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String listPersons(Model model) {
+        model.addAttribute("taleplist", this.talepService.listAllTaleps());
+        return "Talep/index";
+    }
+
 //	@RequestMapping(value="/index", method=RequestMethod.GET)
 //	public ModelAndView list() {
 //		ModelAndView model = new ModelAndView("Talep/index");
