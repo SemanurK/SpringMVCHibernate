@@ -12,8 +12,12 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+<<<<<<< HEAD
 	<context:component-scan base-package="com.kafein" /> <!-- bu kod mevcutta tüm beanları tarıyor bu yüzden beanları artık tek tek 
 		tanımlamaya gerek kalmıcak -->
+=======
+	<context:component-scan base-package="com.kafein" /> <!-- bu kod mevcutta tüm beanları tarıyor bu yüzden beanları artık tek tek tanımlamaya gerek kalmıcak-->
+>>>>>>> b3d692042837a8f744073b820f8a9a4f948f08d7
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<bean id="viewResolver"
@@ -30,30 +34,50 @@
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/kafein2?useSSL=false"></property>
 		<property name="username" value="root"></property>
-		<property name="password" value="Ensarr123"></property>
+		<property name="password" value="Ensarr123"></property>	
 	</bean>
 
+<<<<<<< HEAD
 	<tx:annotation-driven />
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="mydataSource" />
 		<property name="packagesToScan" value="com.kafein.model" /> <!-- tek tek modelleri vermek yerine package verip bundan sonra ekleyeceklerimizide 
 			kapsasın -->
+=======
+	<!-- <bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate"> -->
+	<!-- <property name="dataSource" ref="ds"></property> -->
+	<!-- </bean> -->
+	<tx:annotation-driven/>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="mydataSource"/>
+		<property name="packagesToScan" value="com.kafein.model"/> <!-- tek tek modelleri vermek yerine package verip bundan sonra ekleyeceklerimizide kapsasın-->
+>>>>>>> b3d692042837a8f744073b820f8a9a4f948f08d7
 		<property name="hibernateProperties">
 			<props>
 				<prop key="show_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+<<<<<<< HEAD
 				<prop key="hibernate.naming-strategy">org.hibernate.cfg.DefaultNamingStrategy</prop>
 				
+=======
+>>>>>>> b3d692042837a8f744073b820f8a9a4f948f08d7
 			</props>
 		</property>
 	</bean>
 
 
 
+<<<<<<< HEAD
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+=======
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+>>>>>>> b3d692042837a8f744073b820f8a9a4f948f08d7
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
+
+
 
 </beans>
