@@ -1,20 +1,32 @@
 package com.kafein.model;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "talep")
 public class Talep {
 
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
@@ -27,20 +39,18 @@ public class Talep {
 	@Column(name = "tarih")
 	private Date tarih;
 
+	// @JoinColumn(name = "talep_sahip", referencedColumnName = "kul_id")
 	@Column(name = "talep_sahip")
 	private int talep_sahip;
 
-
-
 	@Column(name = "durum")
 	private boolean durum;
-	
-	@Column(name = "talep_id")
+
+	@JoinColumn(name = "talep_id")
 	private int talep_id;
-	
+
 	@Column(name = "change_id")
 	private String change_id;
-
 
 	@Column(name = "baslangic_tarihi")
 	private Date baslangic_tarihi;
@@ -51,6 +61,10 @@ public class Talep {
 	@Column(name = "efor")
 	private String efor;
 
+
+	@ManyToOne
+	private Kullanici kul;
+	
 	public int getId() {
 		return id;
 	}
@@ -83,7 +97,6 @@ public class Talep {
 		this.tarih = tarih;
 	}
 
-	
 	public int getTalep_id() {
 		return talep_id;
 	}

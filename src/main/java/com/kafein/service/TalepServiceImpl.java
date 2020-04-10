@@ -15,13 +15,9 @@ import com.kafein.model.Talep;
 @Service
 public class TalepServiceImpl implements TalepService{
 	
-	
-    TalepDao talepDAO;	
 	@Autowired
-	@Qualifier("mytalepDAO")
-	public void setTalepdao(TalepDao talepDAO) {
-		this.talepDAO = talepDAO;
-	}
+    TalepDao talepDAO;	
+	
 	@Transactional
 	public List<Talep> listAllTaleps() {		
 		return this.talepDAO.listAllTaleps();

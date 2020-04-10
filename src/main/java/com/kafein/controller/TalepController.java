@@ -18,37 +18,31 @@ import com.kafein.service.TalepService;
 @RequestMapping(value = "/talep")
 public class TalepController {
 
-	@Autowired(required=true)	
-	 TalepService talepService;	
+	@Autowired
+	TalepService talepService;
 
-	
-	@Qualifier(value="talepService")
-	public void setTalepservice(TalepService talepService) {
-		this.talepService = talepService;
-	}
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String listPersons(Model model)
-	{		
+	public String listPersons(Model model) {
+		List<Talep> taleplist=this.talepService.listAllTaleps();
 		model.addAttribute("taleplist", this.talepService.listAllTaleps());
 		return "Talep/index";
 	}
-	
-//	@RequestMapping(value="/index", method=RequestMethod.GET)
-//	public ModelAndView list() {
-//		ModelAndView model = new ModelAndView("Talep/index");
-//		List taleplist = talepservice.listAllTaleps();
-//		model.addObject("taleplist", taleplist);
-//		return model;
-//
-//	}
-//	 @RequestMapping(value="/duzenle/{id}", method=RequestMethod.GET)
-//	 public ModelAndView update(@PathVariable("id") int id){
-//	  ModelAndView model = new ModelAndView("Talep/duzenle");
-//	  Talep talepbilgi = talepservice.findTalepById(id);
-//	  model.addObject("talepbilgi", talepbilgi);
-//	  model.addObject("id",id);	  
-//	  return model;
-//	 }	 
 
+	// @RequestMapping(value="/index", method=RequestMethod.GET)
+	// public ModelAndView list() {
+	// ModelAndView model = new ModelAndView("Talep/index");
+	// List taleplist = talepservice.listAllTaleps();
+	// model.addObject("taleplist", taleplist);
+	// return model;
+	//
+	// }
+	// @RequestMapping(value="/duzenle/{id}", method=RequestMethod.GET)
+	// public ModelAndView update(@PathVariable("id") int id){
+	// ModelAndView model = new ModelAndView("Talep/duzenle");
+	// Talep talepbilgi = talepservice.findTalepById(id);
+	// model.addObject("talepbilgi", talepbilgi);
+	// model.addObject("id",id);
+	// return model;
+	// }
 
 }

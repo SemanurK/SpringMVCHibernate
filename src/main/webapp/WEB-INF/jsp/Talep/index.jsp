@@ -157,7 +157,7 @@ body {
 										<th>Başlangiç Tarih</th>
 										<th>Bitiş Tarih</th>
 										<th>Efor</th>
-										<th>Talep Sahip</th>
+<!-- 										<th>Talep Sahip</th> -->
 										<th>Durum</th>
 										<th>Işlem 1</th>
 									</tr>
@@ -178,8 +178,8 @@ body {
 											<td><c:out value="${item.baslangic_tarihi}" /></td>
 											<td><c:out value="${item.bitis_tarihi}" /></td>
 											<td><c:out value="${item.efor }"></c:out>
-											<td><c:out value="${item.ad_soyad}"></c:out> <br> <small><c:out
-														value="${item.sahip_gorev}"></c:out></small></td>
+<%-- 											<td><c:out value="${item.ad_soyad}"></c:out> <br> <small><c:out --%>
+<%-- 														value="${item.sahip_gorev}"></c:out></small></td> --%>
 											<td><c:if test="${item.durum==false}">
 													<input type="radio" onclick="this.checked = false;" />
 													<b style="padding-left: 5px;">Devam Ediyor </b>
