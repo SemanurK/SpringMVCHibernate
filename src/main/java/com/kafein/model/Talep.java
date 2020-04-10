@@ -41,7 +41,7 @@ public class Talep {
 
 	// @JoinColumn(name = "talep_sahip", referencedColumnName = "kul_id")
 	@Column(name = "talep_sahip")
-	private int talep_sahip;
+	private int talep_sahip1;
 
 	@Column(name = "durum")
 	private boolean durum;
@@ -63,7 +63,7 @@ public class Talep {
 
 
 	@ManyToOne
-	private Kullanici kul;
+	private Kullanici talep_sahip;
 	
 	public int getId() {
 		return id;
@@ -122,11 +122,11 @@ public class Talep {
 	}
 
 	public int getTalep_sahip() {
-		return talep_sahip;
+		return talep_sahip1;
 	}
 
-	public void setTalep_sahip(int talep_sahip) {
-		this.talep_sahip = talep_sahip;
+	public void setTalep_sahip(int talep_sahip1) {
+		this.talep_sahip1 = talep_sahip1;
 	}
 
 	public Date getBaslangic_tarihi() {
