@@ -2,6 +2,7 @@ package com.kafein.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class Kullanici {
 	@Id
-	@Column(name = "id")
+	@Column(name = "kul_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
@@ -33,17 +34,12 @@ public class Kullanici {
 	@Column(name = "gorev")
 	private String gorev;
 
-   /*
-    * Kullanýcýlarýn talepleri var onetomany iliþkisi
-    * mappedBy ile iliþkinin sahibi belirtilir.
-    * */
-
-	@OneToMany(mappedBy="talep_sahip", fetch=FetchType.EAGER)
-	private List<Talep> taleps=new ArrayList<Talep>();
-	
-	public List<Talep> getTaleps() {
-		return taleps;
-	}
+	/*
+	 * Kullanýcýlarýn talepleri var onetomany iliþkisi mappedBy ile iliþkinin
+	 * sahibi belirtilir.
+	 */
+	@OneToMany(mappedBy = "talep_sahip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Talep> taleps;
 
 	public int getId() {
 		return id;
@@ -69,5 +65,4 @@ public class Kullanici {
 		this.gorev = gorev;
 	}
 
-	
 }

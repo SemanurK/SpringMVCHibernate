@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "talep")
+@Table(name = "talep2")
 public class Talep {
 
 	@Id
@@ -39,14 +40,10 @@ public class Talep {
 	@Column(name = "tarih")
 	private Date tarih;
 
-	// @JoinColumn(name = "talep_sahip", referencedColumnName = "kul_id")
-	@Column(name = "talep_sahip")
-	private int talep_sahip1;
-
 	@Column(name = "durum")
 	private boolean durum;
 
-	@JoinColumn(name = "talep_id")
+	@Column(name = "talep_id")
 	private int talep_id;
 
 	@Column(name = "change_id")
@@ -61,10 +58,10 @@ public class Talep {
 	@Column(name = "efor")
 	private String efor;
 
-
-	@ManyToOne
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "talep_sahip_kul_id", nullable = false)
 	private Kullanici talep_sahip;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -119,14 +116,6 @@ public class Talep {
 
 	public void setDurum(boolean durum) {
 		this.durum = durum;
-	}
-
-	public int getTalep_sahip() {
-		return talep_sahip1;
-	}
-
-	public void setTalep_sahip(int talep_sahip1) {
-		this.talep_sahip1 = talep_sahip1;
 	}
 
 	public Date getBaslangic_tarihi() {
