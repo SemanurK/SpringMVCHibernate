@@ -88,7 +88,7 @@ body {
 							style="float: right;">Talep Ekle</Button>
 					</form>
 					<form action="<%=request.getContextPath()%>/Mail/index">
-					<Button class="btn btn-info d-none d-lg-block m-l-15"
+						<Button class="btn btn-info d-none d-lg-block m-l-15"
 							style="float: right;">Mail Kontrol Et</Button>
 					</form>
 				</div>
@@ -142,7 +142,7 @@ body {
 
 
 						</div>
-						
+
 
 						<div class="table-responsive" id="x">
 							<table class="display" id="talep_table">
@@ -152,13 +152,13 @@ body {
 										<th>Talep ID</th>
 										<th>Change ID</th>
 										<th>Talep Adı</th>
-										<th>Spring No</th>
-										<th>Alınan Tarih</th>
-										<th>Başlangiç Tarih</th>
-										<th>Bitiş Tarih</th>
-										<th>Efor</th>
-<!-- 										<th>Talep Sahip</th> -->
-										<th>Durum</th>
+										<th align="center">Spring No</th>
+										<th style="width: 58px;">Alınan Tarih</th>
+										<th style="width: 58px;">Başlangiç Tarih</th>
+										<th style="width: 58px;">Bitiş Tarih</th>
+										<th align="center">Efor</th>
+										<th>Talep Sahip</th>
+										<th style="width: 100px;">Durum</th>
 										<th>Işlem 1</th>
 									</tr>
 
@@ -173,24 +173,25 @@ body {
 											<td><c:out value="${item.change_id}" /></td>
 
 											<td><c:out value="${item.adi}" /></td>
-											<td><c:out value="${item.spring_no}" /></td>
+											<td align="center"><c:out value="${item.spring_no}" /></td>
 											<td><c:out value="${item.tarih}" /></td>
 											<td><c:out value="${item.baslangic_tarihi}" /></td>
 											<td><c:out value="${item.bitis_tarihi}" /></td>
-											<td><c:out value="${item.efor }"></c:out>
-<%-- 											<td><c:out value="${item.ad_soyad}"></c:out> <br> <small><c:out --%>
-<%-- 														value="${item.sahip_gorev}"></c:out></small></td> --%>
+											<td align="center"><c:out value="${item.efor }"></c:out>
+											<td><c:out value="${item.getTalep_sahip().adSoyad}"></c:out>
+												<br> <small><c:out
+														value="${item.getTalep_sahip().gorev}"></c:out></small></td>
 											<td><c:if test="${item.durum==false}">
 													<input type="radio" onclick="this.checked = false;" />
-													<b style="padding-left: 5px;">Devam Ediyor </b>
+													<b style="padding-left: 2px; color:#5DADE2">Devam Ediyor </b>
 												</c:if> <c:if test="${item.durum==true}">
 													<input type="radio" checked="checked"
 														onclick="this.checked = true;" />
-													<b style="padding-left: 5px; color: #a6a6a6;">Tamamlandı</b>
+													<b style="padding-left: 2px; color: #a6a6a6;">Tamamlandı</b>
 												</c:if></td>
 											<td>
 												<form
-													action="<%=request.getContextPath()%>/Talep/duzenle?id=<c:out value='${item.id}' />"
+													action="<%=request.getContextPath()%>/talep/duzenle?id=<c:out value='${item.id}' />"
 													method="post">
 													<Button
 														class="btn waves-effect waves-light btn-outline-success"
@@ -221,30 +222,33 @@ body {
 		$(document)
 				.ready(
 						function() {
-							$('#talep_table').DataTable({
-								language: {
-					                info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
-					                infoEmpty:      "Gösterilecek hiç kayıt yok.",
-					                loadingRecords: "Kayıtlar yükleniyor.",
-					                zeroRecords: "Talep bulunamadı !",
-					                search: "Arama:",
-					              
-					                infoFiltered:   "(toplam _MAX_ kayıttan filtrelenenler)",
-					                buttons: {
-					                    copyTitle: "Panoya kopyalandı.",
-					                    copySuccess:"Panoya %d satır kopyalandı",
-					                    copy: "Kopyala",
-					                    print: "Yazdır",
-					                },
+							$('#talep_table')
+									.DataTable(
+											{
+												language : {
+													info : "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+													infoEmpty : "Gösterilecek hiç kayıt yok.",
+													loadingRecords : "Kayıtlar yükleniyor.",
+													zeroRecords : "Talep bulunamadı !",
+													search : "Arama:",
 
-					                paginate: {
-					                    first: "İlk",
-					                    previous: "Önceki",
-					                    next: "Sonraki",
-					                    last: "Son"
-					                },
-					            }
-							});
+													infoFiltered : "(toplam _MAX_ kayıttan filtrelenenler)",
+													buttons : {
+														copyTitle : "Panoya kopyalandı.",
+														copySuccess : "Panoya %d satır kopyalandı",
+														copy : "Kopyala",
+														print : "Yazdır",
+													},
+
+													paginate : {
+														first : "İlk",
+														previous : "Önceki",
+														next : "Sonraki",
+														last : "Son"
+													},
+												}
+											});
+
 							var sonuc = '${sonuc}';
 							//alert(sonuc);
 
@@ -262,27 +266,22 @@ body {
 											"success");
 								}
 							}
-							var yenitalepsayisi='${yenitalepsayisi}';
-							if (yenitalepsayisi != null && yenitalepsayisi != '') {
+							var yenitalepsayisi = '${yenitalepsayisi}';
+							if (yenitalepsayisi != null
+									&& yenitalepsayisi != '') {
 
 								if (yenitalepsayisi == 0) {
-									swal(
-											"Yeni Talep Bulunmamakta !",
-											"",
+									swal("Yeni Talep Bulunmamakta !", "",
 											"info");
 								} else {
-									swal(
-											"Yeni Talep !",
-											"Sistemde "+yenitalepsayisi+" adet yeni talep mevcut.",
+									swal("Yeni Talep !", "Sistemde "
+											+ yenitalepsayisi
+											+ " adet yeni talep mevcut.",
 											"info");
 								}
 							}
 
-					
-
 						});
-		
-		
 	</script>
 	<script type="text/javascript">
 		function Ara() {
