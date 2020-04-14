@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -38,6 +41,7 @@ public class Kullanici {
 	 * Kullanýcýlarýn talepleri var onetomany iliþkisi mappedBy ile iliþkinin
 	 * sahibi belirtilir.
 	 */
+
 	@OneToMany(mappedBy = "talep_sahip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Talep> taleps;
 

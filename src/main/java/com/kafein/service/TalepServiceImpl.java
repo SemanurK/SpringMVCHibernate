@@ -1,28 +1,23 @@
 package com.kafein.service;
 
-import com.kafein.dao.TalepDao;
-import com.kafein.model.Talep;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import com.kafein.dao.TalepDao;
+import com.kafein.model.Talep;
 
-//@Service Bir beaninin business katmanï¿½nda ï¿½alï¿½ï¿½acak bir bean olduï¿½unu belirtiyoruz
+//@Service Bir beaninin business katmanýnda çalýþacak bir bean olduðunu belirtiyoruz
 @Service
 public class TalepServiceImpl implements TalepService{
-<<<<<<< HEAD
 	
 	@Autowired
     TalepDao talepDAO;	
 	
-=======
-
-	@Autowired
-    TalepDao talepDAO;
-
->>>>>>> b3d692042837a8f744073b820f8a9a4f948f08d7
 	@Transactional
 	public List<Talep> listAllTaleps() {		
 		return this.talepDAO.listAllTaleps();

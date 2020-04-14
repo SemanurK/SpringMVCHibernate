@@ -20,6 +20,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -38,6 +40,7 @@ public class Talep {
 	private String spring_no;
 
 	@Column(name = "tarih")
+
 	private Date tarih;
 
 	@Column(name = "durum")
@@ -61,6 +64,16 @@ public class Talep {
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "talep_sahip_kul_id", nullable = false)
 	private Kullanici talep_sahip;
+
+	
+
+	public Kullanici getTalep_sahip() {
+		return talep_sahip;
+	}
+
+	public void setTalep_sahip(Kullanici talep_sahip) {
+		this.talep_sahip = talep_sahip;
+	}
 
 	public int getId() {
 		return id;

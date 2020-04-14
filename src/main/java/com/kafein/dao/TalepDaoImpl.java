@@ -49,7 +49,15 @@ public class TalepDaoImpl implements TalepDao {
 
 	@Transactional
 	public Talep findTalepById(int id) {
-		Talep talep = (Talep) this.sessionFactory.getCurrentSession().load(Talep.class, new Integer(id));
+		Session session = this.sessionFactory.getCurrentSession();	
+		/*Yöntem 1*/
+	//	Talep talep = (Talep) session.load(Talep.class, new Integer(id));
+		
+		/*Yöntem 2*/
+		Talep talep = (Talep) session.createQuery("from Talep where id = :id")	
+		        .setParameter("id", id)
+		        .uniqueResult();
+		
 		return talep;
 	}
 
