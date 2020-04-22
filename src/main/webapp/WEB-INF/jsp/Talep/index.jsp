@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,17 +21,22 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <!-- <script -->
-<%-- 	src="<%=request.getContextPath()%>/resources/js/jquery-3.2.1.min.js"></script> --%>
+
 <script src="<%=request.getContextPath()%>/resources/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/custom.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/custom.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/waves.js"></script>
-<%-- <script src="<%=request.getContextPath()%>/resources/js/jquey.min.js"></script> --%>
+
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script
 	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <title>Talep</title>
@@ -66,11 +72,11 @@ body {
 }
 </style>
 </head>
-<body>
+<body style="background-color: #e6e6e6">
 
 	<div class="topnav">
-		<a href="<%=request.getContextPath()%>/Talep/yenitalep">Talep Ekle</a>
-		<a href="<%=request.getContextPath()%>/Talep/index">Talep Listesi</a>
+		<a href="<%=request.getContextPath()%>/talep/yenitalep">Talep Ekle</a>
+		<a href="<%=request.getContextPath()%>/talep/index">Talep Listesi</a>
 
 	</div>
 
@@ -81,15 +87,16 @@ body {
 
 
 			<div class="card">
-				<div class="card-header">
+				<div class="card-header"  >
 					<h4 style="float: left;">Talep Listesi</h4>
-					<form action="<%=request.getContextPath()%>/Talep/yenitalep">
+					<form action="<%=request.getContextPath()%>/talep/yenitalep">
 						<Button class="btn btn-info d-none d-lg-block m-l-15"
 							style="float: right;">Talep Ekle</Button>
 					</form>
-					<form action="<%=request.getContextPath()%>/Mail/index">
+					<form action="<%=request.getContextPath()%>/mail/index">
 						<Button class="btn btn-info d-none d-lg-block m-l-15"
-							style="float: right;">Mail Kontrol Et</Button>
+							style="float: right; margin-right: 10px;">Mail Kontrol
+							Et</Button>
 					</form>
 				</div>
 				<div class="card-body">
@@ -108,15 +115,12 @@ body {
 									<option value="talep_id">Talep ID</option>
 									<option value="tarih">Tarih</option>
 
-
-
-
 								</select>
 							</div>
 							<div class="col-sm-4" id="div_durum">
 								<input id="filtre" name="filtre" type="text"
-									placeholder="Arama yapmak istediğiniz kelimeyi giriniz "
-									value='<c:out value="${deger}"></c:out>' class="form-control" />
+									placeholder="Arama yapmak istediğiniz kelimeyi giriniz " 
+									value='<c:out value="${deger}"></c:out>' class="form-control"  />
 
 
 							</div>
@@ -139,8 +143,6 @@ body {
 							<div class="col-sm-1">
 								<Button class="btn btn-success" onclick="javascript:Ara()">Ara</Button>
 							</div>
-
-
 						</div>
 
 
@@ -158,8 +160,9 @@ body {
 										<th style="width: 58px;">Bitiş Tarih</th>
 										<th align="center">Efor</th>
 										<th>Talep Sahip</th>
-										<th style="width: 100px;">Durum</th>
-										<th>Işlem 1</th>
+										<th>Durum</th>
+										<th></th>
+										<th></th>
 									</tr>
 
 
@@ -174,31 +177,39 @@ body {
 
 											<td><c:out value="${item.adi}" /></td>
 											<td align="center"><c:out value="${item.spring_no}" /></td>
-											<td><c:out value="${item.tarih}" /></td>
-											<td><c:out value="${item.baslangic_tarihi}" /></td>
-											<td><c:out value="${item.bitis_tarihi}" /></td>
+											<td><fmt:formatDate value="${item.tarih}"
+													pattern="yyyy-MM-dd" var="tarih" /> <c:out
+													value="${tarih}" /></td>
+											<td><fmt:formatDate value="${item.baslangic_tarihi}"
+													pattern="yyyy-MM-dd" var="baslangic" /> <c:out
+													value="${baslangic}" /></td>
+											<td><fmt:formatDate value="${item.bitis_tarihi}"
+													pattern="yyyy-MM-dd" var="bitis_tarihi" /> <c:out
+													value="${bitis_tarihi}" /></td>
 											<td align="center"><c:out value="${item.efor }"></c:out>
 											<td><c:out value="${item.getTalep_sahip().adSoyad}"></c:out>
 												<br> <small><c:out
 														value="${item.getTalep_sahip().gorev}"></c:out></small></td>
-											<td><c:if test="${item.durum==false}">
-													<input type="radio" onclick="this.checked = false;" />
-													<b style="padding-left: 2px; color:#5DADE2">Devam Ediyor </b>
+											<td align="center"><c:if test="${item.durum==false}">
+													<span style="color: #ffbb00;" class="fas fa-thumbs-down"></span>
 												</c:if> <c:if test="${item.durum==true}">
-													<input type="radio" checked="checked"
-														onclick="this.checked = true;" />
-													<b style="padding-left: 2px; color: #a6a6a6;">Tamamlandı</b>
+													<span style="color: #409700;" class="fas fa-thumbs-up"></span>
 												</c:if></td>
 											<td>
+
 												<form
 													action="<%=request.getContextPath()%>/talep/duzenle?id=<c:out value='${item.id}' />"
 													method="post">
-													<Button
-														class="btn waves-effect waves-light btn-outline-success"
-														style="float: left;">Güncelle</Button>
+													<a
+														href="<%=request.getContextPath()%>/talep/duzenle?id=<c:out value='${item.id}' />">
+														<span class="glyphicon glyphicon-edit"></span>
+													</a>												
 												</form>
 
 											</td>
+											<td align="center"><a
+												href="<%=request.getContextPath()%>/talep/sil?id=<c:out value='${item.id}' />"><span
+													style="color: #ff9999;" class="glyphicon glyphicon-trash"></span></a></td>
 										</tr>
 
 									</c:forEach>
@@ -224,7 +235,17 @@ body {
 						function() {
 							$('#talep_table')
 									.DataTable(
-											{
+										{
+// 												"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+// 												      if ( aData[1] != "" ) {
+// 												        $('td', nRow).css('background-color', '#f0ffe6');
+// 												      }
+// 												      else {
+// 												        $('td', nRow).css('background-color', '#fff8e6');
+// 												      }
+// 												      return nRow;
+// 												    },
+												  
 												language : {
 													info : "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
 													infoEmpty : "Gösterilecek hiç kayıt yok.",
@@ -254,7 +275,7 @@ body {
 
 							if (sonuc != null && sonuc != '') {
 
-								if (sonuc == 0) {
+								if (sonuc != 0) {
 									swal(
 											"Hata !",
 											"Aynı ID numarasına sahip talep sisteme eklenemez !",
@@ -284,24 +305,20 @@ body {
 						});
 	</script>
 	<script type="text/javascript">
+
 		function Ara() {
-			var deger = document.getElementById("filtre").value;
-			var filtre = document.getElementById("secenek").value;
-			var durum = document.getElementsByName("durum").value;
-			var durum = document.querySelector("input[name=durum]:checked").value;
 
-			// 			if (filtre == "durum" && isNaN(deger)) {
-			// 				alert("Tamamlanan talepleri '1' ile Devam etmekte olan talepleri '0' ile goruntuleyebilirsiniz. ");
-			// 				//document.getElementById("filtre").style.visibility = "hidden";
-			// 			}
-
+			var val = document.getElementById("filtre").value;			
+			var filter = document.getElementById("secenek").value;			
+			var state = document.querySelector("input[name=durum]:checked").value;
+			if(val!=""){
 			$.ajax({
 				type : 'Get',
-				url : '/kafein/Talep/filtre',
+				url : '/SpringMVCHibernate2/talep/filtre',
 				data : {
-					'deger' : deger,
-					'filtre' : filtre,
-					'durum' : durum
+					'val' : val,
+					'filter' : filter,
+					'state' : state
 
 				},
 
@@ -310,6 +327,13 @@ body {
 
 				}
 			});
+			}
+			else{
+				swal(
+						"Boş Alan !",
+						"Lütfen arama yapmak istediğiniz metini giriniz !",
+						"info");
+			}
 
 		}
 

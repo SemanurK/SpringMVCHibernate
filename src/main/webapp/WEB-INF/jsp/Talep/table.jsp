@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,84 +13,98 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script
-	src="<%=request.getContextPath()%>/resources/js/jquery-3.2.1.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<!-- <script -->
+
 <script src="<%=request.getContextPath()%>/resources/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/custom.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/waves.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/jquey.min.js"></script>
-<script
-	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="" table-responsive"" id="x">
-
+	<div class="table-responsive" id="x">
 		<table class="display" id="talep_table">
 			<thead>
 				<tr>
-					<!--	<th>#</th>  -->
+
 					<th>Talep ID</th>
 					<th>Change ID</th>
 					<th>Talep Adı</th>
-					<th>Spring No</th>
-					<th>Tarih</th>
-					<th>Başlangıç Tarih</th>
-					<th>Bitiş Tarih</th>
-					<th>Efor</th>
+					<th align="center">Spring No</th>
+					<th style="width: 58px;">Alınan Tarih</th>
+					<th style="width: 58px;">Başlangiç Tarih</th>
+					<th style="width: 58px;">Bitiş Tarih</th>
+					<th align="center">Efor</th>
 					<th>Talep Sahip</th>
 					<th>Durum</th>
-					<th>Işlem 1</th>
+					<th></th>
+					<th></th>
 				</tr>
+
+
 			</thead>
 			<tbody>
-				<c:if test="${empty taleplist }">
-					<td colspan="8" align="center" style="color: #a6a6a6;"><span><b>Hiç
-								bir sonuç bulunamadı.</b></span></td>
-				</c:if>
 				<c:forEach var="item" items="${taleplist}">
 
 					<tr>
-						<!--  <td><c:out value="${item.id}" /></td>-->
+
 						<td><c:out value="${item.talep_id}" /></td>
 						<td><c:out value="${item.change_id}" /></td>
 
 						<td><c:out value="${item.adi}" /></td>
-						<td><c:out value="${item.spring_no}" /></td>
-						<td><c:out value="${item.tarih}" /></td>
-						<td><c:out value="${item.baslangic_tarihi}" /></td>
-						<td><c:out value="${item.bitis_tarihi}" /></td>
-						<td><c:out value="${item.efor }"></c:out>
-						<td><c:out value="${item.ad_soyad}"></c:out> <br> <small><c:out
-									value="${item.sahip_gorev}"></c:out></small></td>
-						<td><c:if test="${item.durum==false}">
-								<input type="radio" onclick="this.checked = false;" />
-								<b style="padding-left: 5px;">Devam Ediyor </b>
+						<td align="center"><c:out value="${item.spring_no}" /></td>
+						<td><fmt:formatDate value="${item.tarih}"
+								pattern="yyyy-MM-dd" var="tarih" /> <c:out value="${tarih}" /></td>
+						<td><fmt:formatDate value="${item.baslangic_tarihi}"
+								pattern="yyyy-MM-dd" var="baslangic" /> <c:out
+								value="${baslangic}" /></td>
+						<td><fmt:formatDate value="${item.bitis_tarihi}"
+								pattern="yyyy-MM-dd" var="bitis_tarihi" /> <c:out
+								value="${bitis_tarihi}" /></td>
+						<td align="center"><c:out value="${item.efor }"></c:out>
+						<td><c:out value="${item.getTalep_sahip().adSoyad}"></c:out>
+							<br> <small><c:out
+									value="${item.getTalep_sahip().gorev}"></c:out></small></td>
+						<td align="center"><c:if test="${item.durum==false}">
+								<span style="color: #ffbb00;" class="fas fa-thumbs-down"></span>
 							</c:if> <c:if test="${item.durum==true}">
-								<input type="radio" checked="checked"
-									onclick="this.checked = true;" />
-								<b style="padding-left: 5px; color: #a6a6a6;">Tamamlandı</b>
+								<span style="color: #409700;" class="fas fa-thumbs-up"></span>
 							</c:if></td>
 						<td>
+
 							<form
-								action="<%=request.getContextPath()%>/Talep/duzenle?id=<c:out value='${item.id}' />"
+								action="<%=request.getContextPath()%>/talep/duzenle?id=<c:out value='${item.id}' />"
 								method="post">
-								<Button class="btn waves-effect waves-light btn-outline-success"
-									style="float: left;">Güncelle</Button>
+								<a
+									href="<%=request.getContextPath()%>/talep/duzenle?id=<c:out value='${item.id}' />">
+									<span class="glyphicon glyphicon-edit"></span>
+								</a>
 							</form>
 
 						</td>
+						<td align="center"><a
+							href="<%=request.getContextPath()%>/talep/sil?id=<c:out value='${item.id}' />"><span
+								style="color: #ff9999;" class="glyphicon glyphicon-trash"></span></a></td>
 					</tr>
+
 				</c:forEach>
 			</tbody>
 		</table>
@@ -127,6 +142,6 @@
 											});
 						});
 	</script>
-
-</body>
+	</bo
+						dy>
 </html>

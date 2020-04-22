@@ -42,7 +42,7 @@ public class Kullanici {
 	 * sahibi belirtilir.
 	 */
 
-	@OneToMany(mappedBy = "talep_sahip", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "talep_sahip", fetch = FetchType.EAGER)
 	private Set<Talep> taleps;
 
 	public int getId() {
@@ -67,6 +67,19 @@ public class Kullanici {
 
 	public void setGorev(String gorev) {
 		this.gorev = gorev;
+	}
+public Kullanici()
+{
+	
+}
+	public Kullanici(int id, String adSoyad, String gorev) {
+		super();
+		this.id = id;
+		this.adSoyad = adSoyad;
+		this.gorev = gorev;
+	}
+	public Kullanici(int id){
+		this.id=id;
 	}
 
 }

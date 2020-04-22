@@ -1,11 +1,9 @@
 package com.kafein.model;
 
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+
+import java.util.Date; // init binder util.date ile calýsýyormuþ bu yüzden buna çevirince oldu
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,34 +11,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "talep2")
+//@Indexed
 public class Talep {
 
+	public Talep(String adi, String spring_no, boolean durum, int talep_id, String efor) {
+		super();
+		this.adi = adi;
+		this.spring_no = spring_no;
+		this.durum = durum;
+		this.talep_id = talep_id;
+		this.efor = efor;
+	}
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private int id;
 
 	@Column(name = "adi")
 	private String adi;
-
+	
+//	@org.hibernate.search.annotations.Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name = "spring_no")
 	private String spring_no;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd",iso=ISO.DATE) // This is for bind Date with @ModelAttribute
 	@Column(name = "tarih")
-
 	private Date tarih;
 
 	@Column(name = "durum")
@@ -52,9 +56,12 @@ public class Talep {
 	@Column(name = "change_id")
 	private String change_id;
 
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd",iso=ISO.DATE) // This is for bind Date with @ModelAttribute
 	@Column(name = "baslangic_tarihi")
 	private Date baslangic_tarihi;
 
+	//@DateTimeFormat(pattern = "yyyy-MM-dd",iso=ISO.DATE) // This is for bind Date with @ModelAttribute
 	@Column(name = "bitis_tarihi")
 	private Date bitis_tarihi;
 
@@ -64,7 +71,6 @@ public class Talep {
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "talep_sahip_kul_id", nullable = false)
 	private Kullanici talep_sahip;
-
 	
 
 	public Kullanici getTalep_sahip() {
@@ -153,6 +159,10 @@ public class Talep {
 
 	public void setEfor(String efor) {
 		this.efor = efor;
+	}
+	public Talep()
+	{
+		
 	}
 
 }

@@ -41,5 +41,25 @@ public class TalepServiceImpl implements TalepService{
 		this.talepDAO.updateTalep(talep);
 		
 	}
+	@Transactional
+	public int ControlTalepId(int talep_id) {
+		return this.talepDAO.ControlTalepId(talep_id);
+	}
+	@Transactional
+	public int searchTalepAdd(List<Talep> list) {
+		return this.talepDAO.searchTalepAdd(list);
+		
+	}
+	@Transactional
+	@Override
+	public int controlSprint(int sprint) {		
+		return this.talepDAO.controlSprint(sprint);
+	}
+
+	@Override
+	public List<Talep> filterTalep(String value, String filter, String state) {
+		// TODO Auto-generated method stub
+		return this.talepDAO.filterTalep(value, filter, state);
+	}
 
 }

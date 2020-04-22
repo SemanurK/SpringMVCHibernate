@@ -18,8 +18,11 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery-3.2.1.min.js"></script>
+
+
 
 <title>Talep Düzenle</title>
 </head>
@@ -53,12 +56,12 @@ body {
 	color: white;
 }
 </style>
-<body>
+<body style="background-color: #e6e6e6">
 
 	<div class="topnav">
 
-		<a href="<%=request.getContextPath()%>/Talep/yenitalep">Talep Ekle</a>
-		<a href="<%=request.getContextPath()%>/Talep/index">Talep Listesi</a>
+		<a href="<%=request.getContextPath()%>/talep/yenitalep">Talep Ekle</a>
+		<a href="<%=request.getContextPath()%>/talep/index">Talep Listesi</a>
 
 	</div>
 	<div class="container">
@@ -67,10 +70,10 @@ body {
 			<div class="col-sm-10">
 				<div class="card">
 					<div class="card-header">
-						<c:if test="${talepbilgi==null }">
+						<c:if test="${empty id}">
 							<h6>Talep Oluşturma İşlemi</h6>
 						</c:if>
-						<c:if test="${talepbilgi!=null }">
+						<c:if test="${!empty id}">
 							<h6>Talep Düzenleme İşlemi</h6>
 						</c:if>
 
@@ -80,7 +83,9 @@ body {
 							modelAttribute="talepbilgi">
 
 							<div class="row">
-								<form:hidden path="id" />
+								<c:if test="${!empty id}">
+									<form:hidden path="id" />
+								</c:if>
 								<div class="col-sm-4">
 									<form:label path="talep_id"
 										style="float: right; margin-top: 4px;"> Talep ID
@@ -144,11 +149,18 @@ body {
 										style="float: right; margin-top: 4px;"> Talebin
 										Sahibi :</form:label>
 								</div>
-								<!-- 								<div class="col-sm-8"> -->
-								<%-- 									<form:select path="talep_sahip" class="form-control" --%>
-								<%-- 										items="${kullaniciBilgi}" itemValue="id" itemLabel="adSoyad"> --%>
-								<%-- 									</form:select> --%>
-								<!-- 								</div> -->
+								<div class="col-sm-8">
+
+									<form:select path="talep_sahip.id" name="talep_sahip.id"
+										class="form-control">
+										<c:forEach items="${kullaniciBilgi}" var="k">
+											<form:option value="${k.id }" label="${k.adSoyad}"></form:option>
+										</c:forEach>
+									</form:select>
+
+								</div>
+
+
 							</div>
 							<div class="row" style="margin-top: 8px;">
 								<div class="col-sm-4">
@@ -156,17 +168,14 @@ body {
 										Tarihi :</form:label>
 								</div>
 								<div class="col-sm-8">
-									<%-- 								<fmt:formatDate value="${tarih}" pattern="yyyy-MM-dd" var="myDate" /> --%>
-									<%-- <form:input path="tarih" id="tarih" value="${myDate}" /> --%>
-
 									<form:input type="date" class="form-control" name="tarih"
-										id="tarih" readonly="readonly" path="tarih" />
+										pattern="yyyy-MM-dd" id="tarih" readonly="true" path="tarih" />
 								</div>
 							</div>
 							<div class="row" style="margin-top: 8px;">
 								<div class="col-sm-4">
 									<form:label path="baslangic_tarihi"
-										style="float: right; margin-top: 4px;">    
+										style="float: right; margin-top: 4px;">   
 																	Başlangıç Tarihi :</form:label>
 
 								</div>
@@ -181,7 +190,7 @@ body {
 								<div class="col-sm-4">
 									<form:label path="bitis_tarihi"
 										style="float: right; margin-top: 4px;"> Bitiş  
-																	Tarihi :</form:label>
+																								Tarihi :</form:label>
 
 								</div>
 								<div class="col-sm-8">
@@ -227,19 +236,20 @@ body {
 							<br>
 							<div class="row">
 								<div class="col-sm-12">
-									<c:if test="${talepbilgi==null }">
+									<c:if test="${empty id}">
 
 										<Button class="btn waves-effect waves-light btn-success"
 											style="float: right;">Talep Oluştur</Button>
 
 									</c:if>
-									<c:if test="${ talepbilgi!=nul}">
+									<c:if test="${!empty id}">
 										<Button class="btn waves-effect waves-light btn-success"
 											style="float: right;">Talebi Güncelle</Button>
 									</c:if>
 
 								</div>
 							</div>
+
 						</form:form>
 					</div>
 				</div>
@@ -251,7 +261,6 @@ body {
 
 	<script type="text/javascript">
 		function Kontrol() {
-
 			var date = new Date();
 			var dateOptions = {
 				day : '2-digit',
@@ -268,9 +277,8 @@ body {
 
 			if (document.getElementById('change_id').value.length != 0) {
 				document.getElementById('tarih').value = currentDate;
-				var x = document.getElementById('tarih').value;
-				alert(x);
-
+				// 				var x = document.getElementById('tarih').value;
+				// 				alert(x);
 				document.getElementById('t_durum').checked = true;
 			} else {
 				document.getElementById('tarih').value = "";
@@ -284,10 +292,11 @@ body {
 						function() {
 
 							var sonuc = '${sonuc}';
+						
 
 							if (sonuc != null && sonuc != '') {
 
-								if (sonuc == 0) {
+								if (sonuc > 0) {
 									swal(
 											"Hata!",
 											"Aynı ID numarasına sahip talep sisteme eklenemez !",
