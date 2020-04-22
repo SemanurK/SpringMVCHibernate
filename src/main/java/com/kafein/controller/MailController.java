@@ -44,8 +44,8 @@ public class MailController {
 
 		String host = "pop.gmail.com";// change accordingly
 		String mailStoreType = "imap";
-		String username = "kafeinxx8@gmail.com";// change accordingly
-		String password = "kafein*89*";// change accordingly
+		String username = "mail";// change accordingly
+		String password = "sifre";// change accordingly
 		check(host, mailStoreType, username, password);
 
 		model.addAttribute("taleplist", talepService.listAllTaleps());

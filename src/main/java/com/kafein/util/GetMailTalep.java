@@ -43,8 +43,8 @@ public class GetMailTalep {
 	public  List<Talep> main() {
 		String host = "pop.gmail.com";// change accordingly
 		String mailStoreType = "imap";
-		String username = "kafeinxx8@gmail.com";// change accordingly
-		String password = "kafein*89*";// change accordingly
+		String username = "mail";// change accordingly
+		String password = "sifre";// change accordingly
 		
 		list=check(host, mailStoreType, username, password);
 		return list;
